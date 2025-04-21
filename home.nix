@@ -1,7 +1,12 @@
 {
-  config,
   pkgs,
-  ...
+  lib,
+  config,
+  options,
+  specialArgs,
+  modulesPath,
+  nixosConfig,
+  osConfig,
 }: {
   home.username = "luis";
   home.homeDirectory = "/home/luis";
@@ -31,6 +36,7 @@
       ctrlp-vim
       nerdtree
       onehalf
+      copilot-vim
     ];
 
     coc = {
@@ -96,8 +102,6 @@
     signal-desktop
     xclip
     alejandra
-    go
-    gopls
     zoom-us
   ];
 }

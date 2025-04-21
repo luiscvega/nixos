@@ -1,7 +1,10 @@
 {
   config,
   pkgs,
-  ...
+  lib,
+  options,
+  specialArgs,
+  modulesPath,
 }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -42,6 +45,10 @@
     variant = "";
   };
 
+  services.xserver.excludePackages = with pkgs; [
+    xterm
+  ];
+
   services.printing.enable = true;
 
   hardware.pulseaudio.enable = false;
@@ -66,6 +73,8 @@
   '';
 
   nixpkgs.config.allowUnfree = true;
+
+  programs.noisetorch.enable = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
