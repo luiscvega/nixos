@@ -67,19 +67,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    spotify
-    tree
-    bitwarden
-    silver-searcher
-    signal-desktop
-    xclip
-    alejandra
-    go
-    gopls
-    zoom-us
-  ];
-
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   system.stateVersion = "24.11"; # Did you read the comment?

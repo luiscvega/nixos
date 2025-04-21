@@ -89,5 +89,15 @@
 
   home.packages = with pkgs; [
     wget
+    spotify
+    tree
+    bitwarden
+    silver-searcher
+    signal-desktop
+    xclip
+    alejandra
+    go
+    gopls
+    zoom-us
   ];
 }
