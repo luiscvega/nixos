@@ -24,7 +24,8 @@
       modules = [
         # Import the previous configuration.nix we used,
         # so the old configuration file still takes effect
-        ./configuration.nix
+        ./hardware.nix
+        ./gnome.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
