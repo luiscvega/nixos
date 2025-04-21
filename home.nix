@@ -77,6 +77,7 @@
     enableBashIntegration = true;
     installVimSyntax = true;
     settings = {
+      gtk-titlebar = false;
       keybind = [
         "ctrl+shift+page_down=move_tab:1"
         "ctrl+shift+page_up=move_tab:-1"
