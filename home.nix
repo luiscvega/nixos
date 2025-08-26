@@ -7,6 +7,7 @@
   modulesPath,
   nixosConfig,
   osConfig,
+  ...
 }: {
   home.username = "luis";
   home.homeDirectory = "/home/luis";
@@ -26,8 +27,14 @@
     extraConfig = ''
       set number
       set nowrap
+      set nohlsearch
       nnoremap <C-e> :NERDTreeToggle<CR>
       colorscheme onehalfdark
+    '';
+
+    extraLuaConfig = ''
+
+      require("typescript-tools").setup {}
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -37,6 +44,8 @@
       nerdtree
       onehalf
       copilot-vim
+      nvim-lspconfig
+      typescript-tools-nvim
     ];
 
     coc = {
@@ -59,6 +68,7 @@
     userName = "Luis Vega";
     userEmail = "1120470+luiscvega@users.noreply.github.com";
     extraConfig.init.defaultBranch = "main";
+    lfs.enable = true;
   };
 
   # SSH
@@ -93,7 +103,15 @@
 
   programs.jq.enable = true;
 
+  # Firefox
+  programs.firefox.enable = true;
+
+  programs.fzf.enable = true;
+
+  programs.chromium.enable = true;
+
   home.packages = with pkgs; [
+    ffmpeg
     wget
     spotify
     tree
@@ -103,5 +121,8 @@
     xclip
     alejandra
     zoom-us
+    simplescreenrecorder
+    gh
+    vscode
   ];
 }

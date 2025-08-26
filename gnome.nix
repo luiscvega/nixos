@@ -5,6 +5,7 @@
   options,
   specialArgs,
   modulesPath,
+  ...
 }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -12,6 +13,7 @@
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
+  networking.firewall.enable = false;
 
   time.timeZone = "Asia/Manila";
 
@@ -60,21 +62,37 @@
     pulse.enable = true;
   };
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_17;
+    extensions = ps: [ps.pgvector];
+  };
+
+  services.tailscale = {
+    enable = true;
+  };
+
+  virtualisation.docker.enable = true;
+
   users.users.luis = {
     isNormalUser = true;
     description = "luis";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
   programs.bash.promptInit = ''
     PS1="\w\[\e[31m\]\\$\[\e[m\] "
   '';
 
+  programs.nix-ld.enable = true;
+
   nixpkgs.config.allowUnfree = true;
 
   programs.noisetorch.enable = true;
+
+  environment.systemPackages = [
+    pkgs.slack
+  ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
