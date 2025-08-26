@@ -7,6 +7,7 @@
   config,
   options,
   specialArgs,
+  ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
