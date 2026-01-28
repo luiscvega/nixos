@@ -18,6 +18,14 @@
     xclip = "xclip -selection clipboard";
   };
 
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      side-by-side = true;
+    };
+  };
+
   # Neovim
   programs.neovim = {
     enable = true;
@@ -65,9 +73,15 @@
   # Git
   programs.git = {
     enable = true;
-    userName = "Luis Vega";
-    userEmail = "1120470+luiscvega@users.noreply.github.com";
-    extraConfig.init.defaultBranch = "main";
+    settings = {
+      user = {
+        name = "Luis Vega";
+        email = "1120470+luiscvega@users.noreply.github.com";
+      };
+
+      init.defaultBranch = "main";
+    };
+
     lfs.enable = true;
   };
 
@@ -115,7 +129,7 @@
     wget
     spotify
     tree
-    bitwarden
+    bitwarden-desktop
     silver-searcher
     signal-desktop
     xclip
