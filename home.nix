@@ -1,22 +1,15 @@
-{
-  pkgs,
-  lib,
-  config,
-  options,
-  specialArgs,
-  modulesPath,
-  nixosConfig,
-  osConfig,
-  ...
-}: {
+{pkgs, ...}: {
   home.username = "luis";
   home.homeDirectory = "/home/luis";
   home.stateVersion = "24.11";
 
-  programs.bash.enable = true;
-  home.shellAliases = {
-    xclip = "xclip -selection clipboard";
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      PS1="\w\[\e[31m\]\\$\[\e[m\] "
+    '';
   };
+  home.shellAliases.xclip = "xclip -selection clipboard";
 
   programs.delta = {
     enable = true;
@@ -41,7 +34,6 @@
     '';
 
     extraLuaConfig = ''
-
       require("typescript-tools").setup {}
     '';
 
@@ -52,7 +44,7 @@
       nerdtree
       onehalf
       copilot-vim
-      nvim-lspconfig
+      plenary-nvim
       typescript-tools-nvim
     ];
 
@@ -88,9 +80,7 @@
   # SSH
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      SetEnv TERM=xterm-256color
-    '';
+    enableDefaultConfig = false;
   };
 
   # direnv
@@ -104,9 +94,10 @@
   # Ghostty
   programs.ghostty = {
     enable = true;
-    enableBashIntegration = true;
+    enableBashIntegration = false;
     installVimSyntax = true;
     settings = {
+      shell-integration-features = "ssh-env";
       gtk-titlebar = false;
       keybind = [
         "ctrl+shift+page_down=move_tab:1"
@@ -115,13 +106,11 @@
     };
   };
 
+  programs.gh.enable = true;
+  programs.vscode.enable = true;
   programs.jq.enable = true;
-
-  # Firefox
   programs.firefox.enable = true;
-
   programs.fzf.enable = true;
-
   programs.chromium.enable = true;
 
   home.packages = with pkgs; [
@@ -136,7 +125,6 @@
     alejandra
     zoom-us
     simplescreenrecorder
-    gh
-    vscode
+    slack
   ];
 }

@@ -1,20 +1,17 @@
-{
-  config,
-  pkgs,
-  lib,
-  options,
-  specialArgs,
-  modulesPath,
-  ...
-}: {
+{pkgs, ...}: {
+  # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmp.cleanOnBoot = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  networking.networkmanager.enable = true;
-  networking.firewall.enable = false;
+  # Networking
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+    firewall.allowedTCPPorts = [8081];
+  };
 
+  # Locale
   time.timeZone = "Asia/Manila";
 
   i18n.defaultLocale = "en_PH.UTF-8";
@@ -30,7 +27,12 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.xserver.enable = true;
+  # Desktop
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us";
+    excludePackages = with pkgs; [xterm];
+  };
 
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -42,16 +44,7 @@
     gnome-weather
   ];
 
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  services.xserver.excludePackages = with pkgs; [
-    xterm
-  ];
-
-  services.printing.enable = true;
+  # Audio
   services.pulseaudio.enable = false;
 
   security.rtkit.enable = true;
@@ -62,39 +55,40 @@
     pulse.enable = true;
   };
 
+  # Services
+  services.printing.enable = true;
+
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
     extensions = ps: [ps.pgvector];
   };
 
-  services.tailscale = {
-    enable = true;
-  };
+  services.tailscale.enable = true;
 
   virtualisation.docker.enable = true;
 
+  # Users
   users.users.luis = {
     isNormalUser = true;
     description = "luis";
     extraGroups = ["networkmanager" "wheel" "docker"];
   };
 
-  programs.bash.promptInit = ''
-    PS1="\w\[\e[31m\]\\$\[\e[m\] "
-  '';
-
+  # System
   programs.nix-ld.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
   programs.noisetorch.enable = true;
 
-  environment.systemPackages = [
-    pkgs.slack
-  ];
-
+  nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "24.11";
 }
