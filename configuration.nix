@@ -8,7 +8,8 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
-    firewall.allowedTCPPorts = [8081 8342];
+    firewall.allowedTCPPorts = [8081 8342 53317];
+    firewall.allowedUDPPorts = [53317];
     firewall.checkReversePath = "loose";
   };
 

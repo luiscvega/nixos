@@ -125,5 +125,7 @@
     zoom-us
     simplescreenrecorder
     slack
+    hunk
+    localsend
   ];
 }
