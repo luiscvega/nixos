@@ -2,18 +2,18 @@
   description = "NixOS workstation";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ghostty.url = "github:ghostty-org/ghostty/v1.3.1";
+    # ghostty.url = "github:ghostty-org/ghostty/v1.3.1";
   };
 
   outputs = {
     nixpkgs,
     home-manager,
-    ghostty,
+    # ghostty,
     ...
   }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -24,7 +24,7 @@
         {
           nixpkgs.overlays = [
             (final: prev: {
-              ghostty = ghostty.packages.x86_64-linux.default;
+              # ghostty = ghostty.packages.x86_64-linux.default;
               hunk = prev.stdenv.mkDerivation rec {
                 pname = "hunk";
                 version = "0.10.0";

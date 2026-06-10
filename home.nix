@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.username = "luis";
   home.homeDirectory = "/home/luis";
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 
   programs.bash = {
     enable = true;
@@ -33,7 +33,7 @@
       colorscheme onehalfdark
     '';
 
-    extraLuaConfig = ''
+    initLua = ''
       require("typescript-tools").setup {}
     '';
 
@@ -117,7 +117,7 @@
     wget
     spotify
     tree
-    bitwarden-desktop
+    # bitwarden-desktop
     silver-searcher
     signal-desktop
     xclip
