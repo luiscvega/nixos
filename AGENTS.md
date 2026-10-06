@@ -22,15 +22,14 @@ No `modules/`, `hosts/`, or `lib/` directories. This is a single-machine config 
 
 - Format with `alejandra` before committing
 - Function args: only list what's actually used (e.g. `{ pkgs, ... }:`)
-- Inline single-attr blocks: `services.tailscale.enable = true;` not `services.tailscale = { enable = true; };`
-- Group related multi-attr blocks: `networking = { hostName = "nixos"; networkmanager.enable = true; };`
+- Inline single-attr blocks: `services.printing.enable = true;` not `services.printing = { enable = true; };`
+- Group related multi-attr blocks: `services.tailscale = { enable = true; useRoutingFeatures = "client"; };`
 - Section comments in `configuration.nix`: `# Boot`, `# Networking`, `# Locale`, `# Desktop`, `# Audio`, `# Services`, `# Users`, `# System`
 
 ## Packages
 
 - System packages in `configuration.nix` `environment.systemPackages`, user packages in `home.nix` `home.packages`
 - Prefer home-manager modules (`programs.X.enable`) over raw packages when available
-- For packages with their own flake (e.g. Ghostty), use the upstream flake input + overlay
 - Set `enableBashIntegration = false` for Ghostty since it auto-injects shell integration
 
 ## Neovim

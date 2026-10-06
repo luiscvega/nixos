@@ -6,11 +6,8 @@
 
   # Networking
   networking = {
-    hostName = "nixos";
     networkmanager.enable = true;
-    firewall.allowedTCPPorts = [8081 8342 53317];
-    firewall.allowedUDPPorts = [53317];
-    firewall.checkReversePath = "loose";
+    firewall.allowedTCPPorts = [8081 8342];
   };
 
   # Locale
@@ -32,7 +29,6 @@
   # Desktop
   services.xserver = {
     enable = true;
-    xkb.layout = "us";
     excludePackages = with pkgs; [xterm];
   };
 
@@ -47,8 +43,6 @@
   ];
 
   # Audio
-  services.pulseaudio.enable = false;
-
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -64,9 +58,20 @@
     enable = true;
     package = pkgs.postgresql_17;
     extensions = ps: [ps.pgvector];
+    ensureDatabases = ["luis"];
+    ensureUsers = [
+      {
+        name = "luis";
+        ensureDBOwnership = true;
+        ensureClauses.superuser = true;
+      }
+    ];
   };
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
 
   virtualisation.docker.enable = true;
 
@@ -83,6 +88,8 @@
   nixpkgs.config.allowUnfree = true;
 
   programs.noisetorch.enable = true;
+
+  programs.localsend.enable = true;
 
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = ["nix-command" "flakes"];

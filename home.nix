@@ -1,6 +1,4 @@
 {pkgs, ...}: {
-  home.username = "luis";
-  home.homeDirectory = "/home/luis";
   home.stateVersion = "26.05";
 
   programs.bash = {
@@ -86,7 +84,6 @@
   # direnv
   programs.direnv = {
     enable = true;
-    enableBashIntegration = true;
     nix-direnv.enable = true;
     config.global.hide_env_diff = true;
   };
@@ -118,7 +115,6 @@
     wget
     spotify
     tree
-    # bitwarden-desktop
     silver-searcher
     signal-desktop
     xclip
@@ -127,6 +123,5 @@
     simplescreenrecorder
     slack
     hunk
-    localsend
   ];
 }
