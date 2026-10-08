@@ -9,6 +9,8 @@
   };
   home.shellAliases.xclip = "xclip -selection clipboard";
 
+  dconf.settings."org/gnome/desktop/input-sources".xkb-options = ["caps:ctrl_modifier"];
+
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
