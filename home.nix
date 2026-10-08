@@ -124,6 +124,5 @@
     zoom-us
     simplescreenrecorder
     slack
-    hunk
   ];
 }
