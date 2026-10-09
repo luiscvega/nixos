@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,6 +12,7 @@
 
   outputs = {
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     ...
   }: {
@@ -21,6 +23,16 @@
         {
           networking.hostName = "x13-gen2";
           system.stateVersion = "24.11";
+          nixpkgs.overlays = [
+            (_: prev: {
+              claude-code =
+                (import nixpkgs-unstable {
+                  system = prev.system;
+                  config.allowUnfree = true;
+                })
+                .claude-code;
+            })
+          ];
         }
         home-manager.nixosModules.home-manager
         {
@@ -38,6 +50,16 @@
         {
           networking.hostName = "x13-gen3";
           system.stateVersion = "26.05";
+          nixpkgs.overlays = [
+            (_: prev: {
+              claude-code =
+                (import nixpkgs-unstable {
+                  system = prev.system;
+                  config.allowUnfree = true;
+                })
+                .claude-code;
+            })
+          ];
         }
         home-manager.nixosModules.home-manager
         {
