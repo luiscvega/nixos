@@ -1,6 +1,6 @@
 # NixOS Configuration
 
-Single-user NixOS flake shared by two machines, `x13-gen2` and `x13-gen3`. Keep it minimal, simple, and straightforward.
+Single-user NixOS flake shared by three machines, `x13-gen2`, `x13-gen3` and `fw13`. Keep it minimal, simple, and straightforward.
 
 ## Structure
 
