@@ -124,5 +124,6 @@
     zoom-us
     simplescreenrecorder
     slack
+    discord
   ];
 }
