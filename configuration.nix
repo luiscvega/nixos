@@ -27,11 +27,6 @@
   };
 
   # Desktop
-  services.xserver = {
-    enable = true;
-    excludePackages = with pkgs; [xterm];
-  };
-
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
@@ -54,7 +49,13 @@
   # Services
   services.printing.enable = true;
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
 
   services.postgresql = {
     enable = true;
@@ -82,9 +83,16 @@
     isNormalUser = true;
     description = "luis";
     extraGroups = ["networkmanager" "wheel" "docker"];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFlZBKb6B1tzocDPRpGqu5ouVxpuxWwmwP+bggElGKcc luis@fw13"
+    ];
   };
 
   # System
+  environment.systemPackages = with pkgs; [
+    bitwarden-desktop # system-wide so polkit can see its biometric unlock policy
+  ];
+
   programs.nix-ld.enable = true;
 
   nixpkgs.config.allowUnfree = true;
